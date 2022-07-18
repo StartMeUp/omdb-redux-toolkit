@@ -16,7 +16,7 @@ export const omdbApi = createApi({
         `/?apikey=${API_KEY}&s=${args.searchTerms}&type=${args.type}`,
     }),
     getOne: builder.query<TDetailedMovie | TDetailedSeries, string>({
-      query: (id) => `/?apikey=${API_KEY}&i=${id}`,
+      query: (id) => `/?apikey=${API_KEY}&i=${id}&plot=full`,
     }),
   }),
 });

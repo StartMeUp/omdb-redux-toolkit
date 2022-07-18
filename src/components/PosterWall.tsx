@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../reduxToolkit/hooks";
 import { useState } from "react";
 import { setMovieSearch, setSeriesSearch } from "../reduxToolkit/search.slice";
+import UnResolvedQuery from "./UnResolvedQuery";
+import NoPicture from "../assets/img/no_picture_available.png";
 
 const PosterTile = ({
   posterUrl,
@@ -17,8 +19,11 @@ const PosterTile = ({
 }) => {
   return (
     <Link to={imdbID}>
-      <div className="flex flex-col p-2 gap-2 border border-gray-400 rounded">
-        <img src={posterUrl} />
+      <div className="bg-neutral-900 flex flex-col p-4 gap-2 border border-gray-400 rounded hover:scale-110 hover:shadow-xl hover:shadow-gray-500 transition-all">
+        <img
+          src={posterUrl !== "N/A" ? posterUrl : NoPicture}
+          className="aspect-[2/3] object-cover"
+        />
         <h3 className="text-xl">{title}</h3>
         <span className="text-lg">{year}</span>
       </div>
@@ -62,19 +67,10 @@ const PosterWall = ({
     }
   };
 
-  if (isLoading)
-    return (
-      <div className="flex justify-center items-center p-4">
-        Loading data ...
-      </div>
-    );
+  if (isLoading) return <UnResolvedQuery text="Loading data ..." />;
 
   if (error)
-    return (
-      <div className="flex justify-center items-center p-4">
-        An error has occured in retrieving data
-      </div>
-    );
+    return <UnResolvedQuery text="An error has occured in retrieving data" />;
 
   if (isSuccess)
     return (
@@ -115,11 +111,7 @@ const PosterWall = ({
       </div>
     );
 
-  return (
-    <div className="flex justify-center items-center p-4">
-      An error has occured
-    </div>
-  );
+  return <UnResolvedQuery text="unknown error" />;
 };
 
 export const MoviePosterWall = ({ searchTerms }: { searchTerms: string }) => (

@@ -32,7 +32,7 @@ const DetailedShow = () => {
       }
 
       return (
-        <div className=" flex flex-col gap-4 sm:flex-row">
+        <div className=" flex flex-col gap-4 sm:flex-row max-w-4xl mx-auto">
           <img
             src={Poster !== "N/A" ? Poster : NoPicture}
             className="sm:aspect-[2/3] sm:object-cover sm:grow-[1]"

@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../reduxToolkit/hooks";
 import { useState } from "react";
 import { setMovieSearch, setSeriesSearch } from "../reduxToolkit/search.slice";
 import UnResolvedQuery from "./UnResolvedQuery";
+import Pagination from "./Pagination";
 import NoPicture from "../assets/img/no_picture_available.png";
 
 const PosterTile = ({
@@ -19,7 +20,7 @@ const PosterTile = ({
 }) => {
   return (
     <Link to={imdbID}>
-      <div className="bg-neutral-900 flex flex-col p-4 gap-2 border border-gray-400 rounded hover:scale-110 hover:shadow-xl hover:shadow-gray-500 transition-all">
+      <div className="bg-gray-700 flex flex-col p-4 gap-2 rounded hover:scale-110 hover:shadow-xl hover:shadow-gray-500 transition-all">
         <img
           src={posterUrl !== "N/A" ? posterUrl : NoPicture}
           className="aspect-[2/3] object-cover"
@@ -108,6 +109,8 @@ const PosterWall = ({
             );
           })}
         </div>
+
+        <Pagination totalResults={data.totalResults} />
       </div>
     );
 

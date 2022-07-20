@@ -8,6 +8,8 @@ type TSearchResultShow = {
 
 export type TSearchResults = {
   Search: TSearchResultShow[];
+  totalResults: string;
+  Response: "True" | "False";
 };
 
 type TDetailedCommon = {

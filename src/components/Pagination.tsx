@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../reduxToolkit/hooks";
 import {
   setTotalPagesArray,
   setCurrentPage,
+  setCurrentPagesArray,
 } from "../reduxToolkit/pagination.slice";
 
 const Pagination = ({
@@ -21,14 +22,27 @@ const Pagination = ({
 
   useEffect(() => {
     dispatch(setTotalPagesArray({ type, totalPages }));
-  }, [totalPages]);
+  }, []);
+
+  const disablePrev = totalPages <= 10 || currentPagesArray[0] === 1;
+  const disableNext =
+    totalPages <= 10 ||
+    currentPagesArray[currentPagesArray.length - 1] === totalPages;
 
   return (
-    <div className="flex flex-wrap">
-      {totalPagesArray.map((pageNumber) => {
+    <div className="flex flex-wrap gap-2">
+      <button
+        disabled={disablePrev}
+        className={`h-8 border border-gray-500 px-4 flex items-center justify-center ${
+          disablePrev && "cursor-not-allowed opacity-80"
+        }`}
+      >
+        Prev
+      </button>
+      {currentPagesArray.map((pageNumber) => {
         return (
           <div
-            className={`w-8 h-8 border border-gray-500 flex items-center justify-center gap-2 cursor-pointer ${
+            className={`w-8 h-8 border border-gray-500 flex items-center justify-center cursor-pointer ${
               pageNumber === currentPage && "text-black bg-white"
             }`}
             onClick={() => {
@@ -39,6 +53,23 @@ const Pagination = ({
           </div>
         );
       })}
+      <button
+        disabled={disableNext}
+        className={`h-8 border border-gray-500 px-4 flex items-center justify-center ${
+          disableNext && "cursor-not-allowed opacity-80"
+        }`}
+        onClick={() =>
+          dispatch(
+            setCurrentPagesArray({
+              type,
+              actionBtn: "next",
+              refIndex: totalPagesArray.indexOf(currentPagesArray.slice(-1)[0]),
+            })
+          )
+        }
+      >
+        Next
+      </button>
     </div>
   );
 };

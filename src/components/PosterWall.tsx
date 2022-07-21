@@ -1,7 +1,7 @@
 import { useGetListQuery } from "../reduxToolkit/omdbApi";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../reduxToolkit/hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { setMovieSearch, setSeriesSearch } from "../reduxToolkit/search.slice";
 import UnResolvedQuery from "./UnResolvedQuery";
 import Pagination from "./Pagination";

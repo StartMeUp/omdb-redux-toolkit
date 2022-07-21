@@ -39,13 +39,15 @@ const PosterWall = ({
   type: "movie" | "series";
   searchTerms: string;
 }) => {
+  const { pagination, search } = useAppSelector((state) => state);
+  const { movieSearch, seriesSearch } = search;
+  const dispatch = useAppDispatch();
+
   const { isLoading, data, isSuccess, error } = useGetListQuery({
     type,
     searchTerms,
+    currentPage: pagination[type].currentPage,
   });
-
-  const { movieSearch, seriesSearch } = useAppSelector((state) => state.search);
-  const dispatch = useAppDispatch();
 
   const category =
     type[type.length - 1] === "s"
@@ -110,7 +112,7 @@ const PosterWall = ({
           })}
         </div>
 
-        <Pagination totalResults={data.totalResults} />
+        <Pagination totalResults={data.totalResults} type={type} />
       </div>
     );
 

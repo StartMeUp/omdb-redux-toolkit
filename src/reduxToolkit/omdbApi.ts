@@ -10,10 +10,10 @@ export const omdbApi = createApi({
   endpoints: (builder) => ({
     getList: builder.query<
       TSearchResults,
-      { type: "movie" | "series"; searchTerms: string }
+      { type: "movie" | "series"; searchTerms: string; currentPage: number }
     >({
       query: (args) =>
-        `/?apikey=${API_KEY}&s=${args.searchTerms}&type=${args.type}`,
+        `/?apikey=${API_KEY}&s=${args.searchTerms}&type=${args.type}&page=${args.currentPage}`,
     }),
     getOne: builder.query<TDetailedMovie | TDetailedSeries, string>({
       query: (id) => `/?apikey=${API_KEY}&i=${id}&plot=full`,

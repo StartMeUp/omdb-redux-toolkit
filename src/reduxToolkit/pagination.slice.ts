@@ -32,6 +32,11 @@ export const pagination = createSlice({
   name: "pagination",
   initialState,
   reducers: {
+    resetCurrentPagesArray: (state, action: PayloadAction<ShowTypes>) => {
+      const { type } = action.payload;
+      const showType = state[type];
+      showType.currentPagesArray = [];
+    },
     setTotalPagesArray: (
       state,
       action: PayloadAction<{ totalPages: number } & ShowTypes>
@@ -48,12 +53,11 @@ export const pagination = createSlice({
       showType.totalPagesArray = tempTotalPagesArray;
 
       // set automatically currentPagesArray first time if empty
-      if (showType.currentPagesArray.length === 0) {
-        if (showType.totalPagesArray.length <= 10) {
-          showType.currentPagesArray = showType.totalPagesArray;
-        } else {
-          showType.currentPagesArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        }
+
+      if (showType.totalPagesArray.length <= 10) {
+        showType.currentPagesArray = showType.totalPagesArray;
+      } else {
+        showType.currentPagesArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
       }
     },
     setCurrentPage: (
@@ -87,7 +91,7 @@ export const pagination = createSlice({
         } else {
           showType.currentPagesArray = showType.totalPagesArray.slice(
             refIndex + 1,
-            -1
+            showType.totalPagesArray.length - 1
           );
         }
       }
@@ -100,5 +104,9 @@ export const pagination = createSlice({
 });
 
 export default pagination.reducer;
-export const { setTotalPagesArray, setCurrentPage, setCurrentPagesArray } =
-  pagination.actions;
+export const {
+  setTotalPagesArray,
+  setCurrentPage,
+  setCurrentPagesArray,
+  resetCurrentPagesArray,
+} = pagination.actions;

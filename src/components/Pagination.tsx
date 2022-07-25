@@ -13,7 +13,7 @@ const Pagination = ({
   totalResults: string;
   type: "movie" | "series";
 }) => {
-  const { pagination } = useAppSelector((state) => state);
+  const { pagination, search } = useAppSelector((state) => state);
   const showType = pagination[type];
   const { currentPage, currentPagesArray, totalPagesArray } = showType;
   const dispatch = useAppDispatch();
@@ -30,7 +30,7 @@ const Pagination = ({
     currentPagesArray[currentPagesArray.length - 1] === totalPages;
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-2 justify-center">
       <button
         disabled={disablePrev}
         className={`h-8 border border-gray-500 px-4 flex items-center justify-center ${
